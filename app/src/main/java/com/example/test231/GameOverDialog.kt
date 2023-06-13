@@ -13,7 +13,6 @@ open class GameOverDialog(context: Context, private val restartListener: () -> U
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE) //remove title bar
         setContentView(R.layout.game_over)
 

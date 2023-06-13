@@ -6,15 +6,21 @@
     android:layout_height="match_parent"
     android:background="#F6ECE2"
     >
-
-    <ImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="560dp"
 
-        app:srcCompat="@drawable/orange_cream_retro_game_over_t_s" />
-
-    <ImageButton
+        app:srcCompat="@drawable/orange_cream_retro_game_over_t_s"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <ImageButton
         android:id="@+id/button_over"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
@@ -22,4 +28,5 @@
         android:background="#F6ECE2"
         app:srcCompat="@drawable/icons8_restart_50"
         />
+    </LinearLayout>
 </LinearLayout>
