@@ -1,15 +1,16 @@
 package com.example.test231
 
 open class Board {
-    private val size = 4
-    val board: Array<IntArray> = Array(size) { IntArray(size) }
+    var currentstate:Array<IntArray> = Array(4) { IntArray(4) }
+    val board: Array<IntArray> = Array(4) { IntArray(4) }
     init {
+        currentstate = board
         initializeBoard()
     }
 
     private fun initializeBoard(): Array<IntArray> {
-        for (i in 0 until size) {
-            for (j in 0 until size) {
+        for (i in 0 until 4) {
+            for (j in 0 until 4) {
                 board[i][j] = 0
             }
         }

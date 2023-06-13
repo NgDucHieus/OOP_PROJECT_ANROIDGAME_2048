@@ -1,5 +1,7 @@
 package com.example.test231
 
+import GameOverDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -10,13 +12,15 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-
+import java.lang.Math.atan2
 
 class MainActivity : AppCompatActivity() {
     private lateinit var context:Context
     private lateinit var matrix: Array<Array<TextView>> // 2d matrix
-    private var x1 = 0f
-    private var y1 = 0f
+    private var x1:Double = 0.0
+    private var y1 :Double = 0.0
+    private var x2: Double = 0.0
+    private var y2:Double =0.0
     private lateinit var tvScore:TextView
     private lateinit var tvBest: TextView
     private lateinit var game: MainGame
@@ -24,14 +28,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var customFont:Typeface
     private lateinit var buttonRestart: Button
     private lateinit var best:SharedPreferences
-
-
-
-
+    private lateinit var dialog:Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //dialog declare
+        dialog = Dialog(this)
+        //set transparent
+
         //save high score
         context = applicationContext
         best = context.getSharedPreferences("High_score",Context.MODE_PRIVATE)
@@ -79,21 +84,22 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the game and board
         setUpNewGame()
-        //
-        buttonRestart.setOnClickListener {
-            setUpNewGame()
-        }
-        // Access and manipulate the TextViews in the matrix as needed
+
 
     }
+
+
     private fun setUpNewGame()
     {
         game = MainGame()
         board = Board()
         updateUI()
         updatescore()
-    }
+        buttonRestart.setOnClickListener {
+            setUpNewGame()
+        }
 
+    }
     private fun updateUI() {
         for (i in matrix.indices) {
             for (j in matrix[i].indices) {
@@ -103,9 +109,6 @@ class MainActivity : AppCompatActivity() {
                     if (value != 0) {
                         text = value.toString()
                         typeface = customFont //set Font for text
-
-
-
                     } else {
                         text = ""
                     }
@@ -124,7 +127,6 @@ class MainActivity : AppCompatActivity() {
         textView.setBackgroundResource(R.drawable.custom_cell)
 
     }
-
     private fun txCol(value: Int):Int
     {
         var colorcode =resources.getColor(R.color.t_dark_text,null)
@@ -152,7 +154,6 @@ class MainActivity : AppCompatActivity() {
         }
         return bgCol
     }
-
     private fun updatescore()
     {
         val currentscore = game.score
@@ -174,36 +175,133 @@ class MainActivity : AppCompatActivity() {
         when (event.action) {
             // when the user first touches the screen we get x and y coordinates
             MotionEvent.ACTION_DOWN -> {
-                x1 = event.x
-                y1 = event.y
+                x1 = event.x.toDouble()
+                y1 = event.y.toDouble()
             }
             // when the user releases the touch, we will have x and y coordinates
             MotionEvent.ACTION_UP -> {
-                val x2 = event.x
-                val y2 = event.y
+                 x2 = event.x.toDouble()
+                 y2 = event.y.toDouble()
                 val minDistance = 100 // pixel
+                if (x1 < x2 && x2 - x1 > minDistance) {   //swipe right
+                    if(game.isGameOver(board.board))
+                    {
+                        showGameOverDialog2()
+                    }
+                    else if(y2>y1) //bottom right
+                    {
+                        if(calculateAngle(x1,y1,x2,y2) > 45)
+                        {
+                            game.swipeRight(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                        else
+                        {
+                            game.swipeDown(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                    }
+                    else if( y2<y1) //top right
+                    {
+                        if(calculateAngle(x1,y2,x2,y1) > 45)
+                        {
+                            game.swipeUp(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                        else
+                        {
+                            game.swipeRight(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                    }
+                    else{
+                        game.swipeRight(board.board)
+                         updateUI()
+                        updatescore()
+                    }
 
-                if (x1 < x2 && x2 - x1 > minDistance) {
-                    game.swipeRight(board.board)
-                    updateUI()
-                    updatescore()
-                } else if (x1 > x2 && x1 - x2 > minDistance) {
-                    game.swipeLeft(board.board)
-                    updateUI()
-                    updatescore()
-                } else if (y1 < y2 && y2 - y1 > minDistance) {
+                }
+                else if (x1 > x2 && x1 - x2 > minDistance) { //swipe left
+                    if(game.isGameOver(board.board))
+                    {
+                        showGameOverDialog2()
+                    }
+                    else if(y1>y2) //top left
+                    {
+                        if(calculateAngle(x2,y2,x1,y1) > 45)
+                        {
+                            game.swipeUp(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                        else
+                        {
+                            game.swipeLeft(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                    }
+                    else if(y2>y1) //bottom left
+                    {
+                        if(calculateAngle(x2,y1,x1,y2) > 45)
+                        {
+                            game.swipeDown(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                        else
+                        {
+                            game.swipeLeft(board.board)
+                            updateUI()
+                            updatescore()
+                        }
+                    }
+                    else {
+                        game.swipeLeft(board.board)
+                        updateUI()
+                        updatescore()
+                    }
+                }
+                else if (y1 < y2 && y2 - y1 > minDistance) { //swipe down
+                    if(game.isGameOver(board.board))
+                    {
+                        showGameOverDialog2()
+                    }
                     game.swipeDown(board.board)
                     updateUI()
                     updatescore()
-                } else if (y1 > y2 && y1 - y2 > minDistance) {
+                }
+                else if (y1 > y2 && y1 - y2 > minDistance) { //swipe up
+                    if(game.isGameOver(board.board))
+                    {
+                        showGameOverDialog2()
+                    }
                     game.swipeUp(board.board)
                     updateUI()
                     updatescore()
+
                 }
             }
         }
         return super.onTouchEvent(event)
+    }
+    private fun showGameOverDialog2() {
+        val dialog2 = GameOverDialog(this)
+        {
+            // Handle restart logic here
+            setUpNewGame()
+        }
+        dialog2.show()
 
+    }
+    private fun calculateAngle(x1: Double, y1: Double, x2: Double, y2: Double): Double {
+        val angleRadians = atan2(y2 - y1, x2 - x1)
+        val angleDegrees = Math.toDegrees(angleRadians)
+        return angleDegrees
     }
 }
 

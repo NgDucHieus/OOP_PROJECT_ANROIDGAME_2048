@@ -12,12 +12,12 @@
     >
 
     <LinearLayout
-        android:layout_width="377dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -43,24 +43,23 @@
             </LinearLayout>
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="132dp"
-                android:orientation="horizontal">
-
-
+                android:orientation="vertical"
+                >
                 <LinearLayout
-                    android:layout_width="130dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="2"
+                    >
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="2"
-                        android:background="#27190E"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/score"
                         android:orientation="vertical"
                         tools:ignore="InefficientWeight,RtlHardcoded">
 
@@ -78,82 +77,58 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:gravity="center"
-                            android:text="100"
+                            android:text="0"
                             android:textColor="@color/cardview_light_background"
                             android:textSize="4mm"
                             tools:ignore="HardcodedText,InOrMmUsage,TextSizeCheck" />
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <Button
-                            android:id="@+id/restart"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#D84315"
-                            android:text="New"
-                            android:textColor="#FFFFFF"
-                            android:textSize="30dp"
-                            tools:ignore="HardcodedText,InefficientWeight,SpUsage" />
-                    </LinearLayout>
-                </LinearLayout>
+                            android:layout_weight="2"
+                            android:background="@drawable/grid_layout"
+                            android:paddingBottom="5dp"
+                            android:orientation="vertical"
+                            tools:ignore="InefficientWeight">
 
-                <LinearLayout
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Best"
+                                android:textSize="3mm"
+                                tools:ignore="HardcodedText,InOrMmUsage,TextSizeCheck" />
+
+                            <TextView
+                                android:id="@+id/best"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/cardview_light_background"
+                                android:textSize="4mm"
+                                tools:ignore="HardcodedText,InOrMmUsage,TextContrastCheck,TextSizeCheck" />
+                        </LinearLayout>
+                    </LinearLayout>
+                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                     android:paddingTop="8dp"
+                     >
+                    <Button
+                        android:id="@+id/restart"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:background="@drawable/grid_layout"
-                        android:paddingBottom="5dp"
-                        android:orientation="vertical"
-                        tools:ignore="InefficientWeight">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Best"
-                            android:textSize="3mm"
-                            tools:ignore="HardcodedText,InOrMmUsage,TextSizeCheck" />
-
-                        <TextView
-                            android:id="@+id/best"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:gravity="center"
-                            android:text="12393"
-                            android:textColor="@color/cardview_light_background"
-                            android:textSize="4mm"
-                            tools:ignore="HardcodedText,InOrMmUsage,TextContrastCheck,TextSizeCheck" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_marginTop="11dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:background="#fbf8ef"
-                            android:text="UNDO"
-                            android:textColor="#F4511E"
-                            android:textSize="30sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
+                        android:layout_weight="1"
+                        android:background="@drawable/new_button"
+                        android:text="New"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"
+                        tools:ignore="HardcodedText,InefficientWeight,SpUsage" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
+            </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
